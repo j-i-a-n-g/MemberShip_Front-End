@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import React from 'react';
+import React, { Suspense } from 'react';
 const Login = React.lazy(() => import("@/view/Login/Login.jsx"));
 const Home = React.lazy(() => import("@/view/Home/Home.jsx"));
 export default createBrowserRouter([
@@ -9,6 +9,6 @@ export default createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Home />
+    element: <Suspense><Home /></Suspense>
   }
 ])

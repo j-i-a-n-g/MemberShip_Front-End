@@ -6,11 +6,11 @@ const user = createSlice({
     userInfo: null
   },
   reducers: {
-    incre: state => {
-      state.userInfo = {}
+    setUserInfo: (state, val) => {
+      state.userInfo = { ...val.data }
     }
   }
 })
 
-export const { incre } = user.actions;
+export const { setUserInfo } = user.actions;
 export default user.reducer;
