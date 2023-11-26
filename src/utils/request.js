@@ -8,6 +8,21 @@ const service = axios.create({
   withCredentials: false, // send cookies when cross-domain requests
   timeout: 30 * 1000 // request timeout
 });
+service.interceptors.request.use(request => {
+  console.log(request)
+  if (request.url !== "/api/user/autoLogin") {
+    return request
+  }
+  let token = localStorage.getItem('member_token')
+  if (!token) {
+    window.location.href = "/"
+    return
+  }
+  request.headers["Authorization"] = token;
+  return request
+}, error => {
+  return Promise.reject(error);
+})
 
 service.interceptors.response.use(response => {
   const res = response.data;
@@ -15,9 +30,9 @@ service.interceptors.response.use(response => {
   // let url = config.url;
   if (res.code !== 200) {
     message.error(res.message || '请求出错')
-    return Promise.reject(res);
+    return Promise.reject(res.data);
   }
-  return res
+  return res.data
 }, error => {
   // do something with request error
   if (process.env.NODE_ENV === "development") {

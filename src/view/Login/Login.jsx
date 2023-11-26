@@ -13,8 +13,10 @@ export default function Login() {
       method: 'Post',
       data: values
     }).then(res => {
+      console.log(res)
       message.success(res.message)
-      dispatch({ type: "user/setUserInfo", data: res.data.data })
+      dispatch({ type: "user/setUserInfo", data: res.data.user })
+      localStorage.setItem('member_token', res.data.token)
       navigate("/home")
     }).catch(() => { })
   };

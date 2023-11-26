@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Layout, Menu, Popover } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux'
 import './Home.scss';
-import { navMenu, items2 } from '@/hook/data.js'
+import { navMenu, items2 } from '@/hook/data.js';
+import request from '@/utils/request.js';
+import { useDispatch } from 'react-redux'
 
 export default function Home() {
   const { Header, Content, Sider } = Layout;
   const userInfo = useSelector(state => {
-    console.log(state)
     return state.user.userInfo;
   })
+  const dispatch = useDispatch()
+  useEffect(() => {
+    request({
+      method: 'get',
+      url: "/api/user/autoLogin",
+    }).then(res => {
+      dispatch({ type: "user/setUserInfo", data: res.data })
+    }).catch(() => { })
+  }, [])
   const popoverContent = (
     <div>
       <p>个人设置</p>
