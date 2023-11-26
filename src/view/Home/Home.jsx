@@ -5,10 +5,12 @@ import { useSelector } from 'react-redux'
 import './Home.scss';
 import { navMenu, items2 } from '@/hook/data.js';
 import request from '@/utils/request.js';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const { Header, Content, Sider } = Layout;
+  const navigate = useNavigate()
   const userInfo = useSelector(state => {
     return state.user.userInfo;
   })
@@ -19,12 +21,19 @@ export default function Home() {
       url: "/api/user/autoLogin",
     }).then(res => {
       dispatch({ type: "user/setUserInfo", data: res.data })
-    }).catch(() => { })
-  }, [])
+    }).catch(() => {
+      navigate("/")
+    })
+  }, [dispatch, navigate])
+  // 退出登录
+  const layout = function () {
+    localStorage.removeItem("member_token");
+    navigate("/")
+  }
   const popoverContent = (
-    <div>
-      <p>个人设置</p>
-      <p>退出登录</p>
+    <div style={{ cursor: "pointer" }}>
+      <p style={{ lineHeight: "30px" }}>个人信息</p>
+      <p style={{ lineHeight: "30px" }} onClick={layout}>退出登录</p>
     </div>
   )
 

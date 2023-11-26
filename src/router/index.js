@@ -5,7 +5,7 @@ const Home = React.lazy(() => import("@/view/Home/Home.jsx"));
 export default createBrowserRouter([
   {
     path: "/",
-    element: <Login />
+    element: <Suspense><Login /></Suspense>
   },
   {
     path: "/home",
