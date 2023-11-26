@@ -6,7 +6,7 @@ import './Home.scss';
 import { navMenu, items2 } from '@/hook/data.js';
 import request from '@/utils/request.js';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, Outlet } from 'react-router-dom';
 
 export default function Home() {
   const { Header, Content, Sider } = Layout;
@@ -32,7 +32,9 @@ export default function Home() {
   }
   const popoverContent = (
     <div style={{ cursor: "pointer" }}>
-      <p style={{ lineHeight: "30px" }}>个人信息</p>
+      <p style={{ lineHeight: "30px" }}>
+        <Link to={"/home/person"}>个人设置</Link>
+      </p>
       <p style={{ lineHeight: "30px" }} onClick={layout}>退出登录</p>
     </div>
   )
@@ -59,7 +61,7 @@ export default function Home() {
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }} >
           <Content style={{ padding: 24, margin: 0, minHeight: 280, backgroundColor: '#febcd3' }}>
-            Content
+            <Outlet></Outlet>
           </Content>
         </Layout>
       </Layout>
