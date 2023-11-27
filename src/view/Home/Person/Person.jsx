@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Input } from 'antd';
 import { useSelector } from 'react-redux'
 import "./Person.scss"

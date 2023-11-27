@@ -31,9 +31,12 @@ export default function Home() {
     navigate("/")
   }
   const popoverContent = (
-    <div style={{ cursor: "pointer" }}>
+    <div className='home_popover' style={{ cursor: "pointer" }}>
       <p style={{ lineHeight: "30px" }}>
         <Link to={"/home/person"}>个人设置</Link>
+      </p>
+      <p style={{ lineHeight: "30px" }}>
+        <Link to={"/home/topic"}>设置主题</Link>
       </p>
       <p style={{ lineHeight: "30px" }} onClick={layout}>退出登录</p>
     </div>

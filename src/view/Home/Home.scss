@@ -11,21 +11,20 @@
     }
   }
 
-}
+  .logo {
+    width: 250px;
+    height: 50px;
+    background-color: #ccc;
+    margin: 10px;
+  }
 
-.logo {
-  width: 250px;
-  height: 50px;
-  background-color: #ccc;
-  margin: 10px;
-}
+  .ant-menu-root {
+    width: 100%;
+  }
 
-.ant-menu-root {
-  width: 100%;
-}
-
-.ant-layout-header {
-  padding: 0 !important;
+  .ant-layout-header {
+    padding: 0 !important;
+  }
 }
 
 .ant-popover {
@@ -38,4 +37,12 @@
   cursor: pointer;
   line-height: 30px;
   text-align: center;
+}
+
+.home_popover {
+
+  p,
+  a {
+    color: #000;
+  }
 }
