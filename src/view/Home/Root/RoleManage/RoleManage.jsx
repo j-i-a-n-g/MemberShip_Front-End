@@ -17,6 +17,12 @@ export default function RoleManage() {
     setTreeDataObj({ checkedKeysValue: [], checkedNodes: [] })
     form.resetFields();
   };
+  // 获取table表格数据
+  const getTableData = () => {
+    request.get("/api/role/getRoleList").then(res => {
+      setTableData(res.data)
+    }).catch(() => { })
+  }
   // 提交数据
   const onSubmit = (values) => {
     // console.log(values, treeDataObj.checkedNodes, '要提交的数据')
@@ -38,17 +44,16 @@ export default function RoleManage() {
     request.post("/api/role/createRole", data).then(res => {
       message.success(res.message)
       onClose()
+      getTableData()
     }).catch(() => { })
   }
   // 查询表格数据
   useEffect(() => {
-    request.get("/api/role/getRoleList").then(res => {
-      setTableData(res.data)
-    }).catch(() => { })
+    getTableData()
   }, [])
   // 选中权限
   const setRoleChoosed = (checkedKeysValue, info) => {
-    console.log(checkedKeysValue, info);
+    // console.log(checkedKeysValue, info);
     setTreeDataObj({ checkedKeysValue: checkedKeysValue, checkedNodes: info.checkedNodes })
   }
   return (
