@@ -30,6 +30,9 @@ export default function Home() {
     localStorage.removeItem("member_token");
     navigate("/")
   }
+  const navigateMenu = function (item) {
+    navigate(item.key)
+  }
   const popoverContent = (
     <div className='home_popover' style={{ cursor: "pointer" }}>
       <p style={{ lineHeight: "30px" }}>
@@ -52,7 +55,7 @@ export default function Home() {
             <Avatar size={50} icon={<UserOutlined />}></Avatar>
           </Popover>
         </div>
-        <Menu theme="dark" mode="horizontal" items={navMenu} />
+        <Menu theme="dark" mode="horizontal" items={navMenu} onSelect={navigateMenu} />
       </Header>
       <Layout>
         {/* 侧边栏 */}
@@ -62,7 +65,7 @@ export default function Home() {
             items={items2}
           />
         </Sider>
-        <Layout style={{ padding: '0 24px 24px' }} >
+        <Layout style={{ padding: '0 10px 24px' }} >
           <Content style={{ padding: 24, margin: 0, minHeight: 280, backgroundColor: '#febcd3' }}>
             <Outlet></Outlet>
           </Content>

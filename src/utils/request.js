@@ -9,7 +9,6 @@ const service = axios.create({
   timeout: 30 * 1000 // request timeout
 });
 service.interceptors.request.use(request => {
-  console.log(request)
   if (request.url !== "/api/user/autoLogin") {
     return request
   }
@@ -32,11 +31,12 @@ service.interceptors.response.use(response => {
     message.error(res.message || '请求出错')
     return Promise.reject(res.data);
   }
-  return res.data
+  return res
 }, error => {
+  console.log(error)
   // do something with request error
   if (process.env.NODE_ENV === "development") {
-    message.error(error.response.data.message || '请求出错')
+    message.error(error.response.data.message || error.message || '请求出错')
   }
   return Promise.reject(error);
 })

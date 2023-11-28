@@ -4,6 +4,7 @@ const Login = React.lazy(() => import("@/view/Login/Login.jsx"));
 const Home = React.lazy(() => import("@/view/Home/Home.jsx"));
 const Person = React.lazy(() => import("@/view/Home/Person/Person.jsx"));
 const Topic = React.lazy(() => import("@/view/Home/Topic/Topic.jsx"));
+const Root = React.lazy(() => import("@/view/Home/Root/Root.jsx"));
 export default createBrowserRouter([
   {
     path: "/",
@@ -20,7 +21,11 @@ export default createBrowserRouter([
       {
         path: 'topic',
         element: <Suspense><Topic /></Suspense>,
-      }
+      },
+      {
+        path: 'root',
+        element: <Suspense><Root /></Suspense>,
+      },
     ]
   }
 ])
