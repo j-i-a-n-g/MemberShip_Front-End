@@ -1,6 +1,7 @@
 import React from 'react';
 import { Drawer } from 'antd';
-import './SettingTopicDialog.scss'
+import './SettingTopicDialog.scss';
+import { setTopic } from '@/utils/setTopic.js'
 export default function SettingTopicDialog(props) {
   let topicIndex = localStorage.getItem("topic_number") || 0
   let list = [];
@@ -16,9 +17,9 @@ export default function SettingTopicDialog(props) {
       item.className = 'topic'
     })
     e.target.parentNode.className += " active";
+    setTopic(id)
     localStorage.setItem('topic_number', id)
   }
-  const onSubmit = () => { }
   return (
     <Drawer title="创建角色" placement="right" onClose={props.onClose} open={props.open}>
       <div className='topic_main'>

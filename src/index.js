@@ -7,6 +7,11 @@ import { RouterProvider } from 'react-router-dom';
 import store from './store/index.js';
 import { Provider } from 'react-redux/es/exports.js';
 
+window.onload = () => {
+  window.addEventListener('storage', () => {
+    console.log(12312)
+  })
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
