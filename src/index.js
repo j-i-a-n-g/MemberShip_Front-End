@@ -13,8 +13,10 @@ window.onload = () => {
   if (index) {
     setTopic(parseInt(index) || 0)
   }
-  window.addEventListener('storage', () => {
-    console.log(12312)
+  window.addEventListener('storage', (e) => {
+    if (e.key == "topic_number") {
+      setTopic(parseInt(e.newValue))
+    }
   })
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));

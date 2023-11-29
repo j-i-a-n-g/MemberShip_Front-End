@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Layout, Menu, Popover } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux'
@@ -7,9 +7,12 @@ import { navMenu, items2 } from '@/hook/data.js';
 import request from '@/utils/request.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link, Outlet } from 'react-router-dom';
+import SettingTopicDialog from '@/components/SettingTopicDialog/SettingTopicDialog.jsx';
 
 export default function Home() {
   const { Header, Content, Sider } = Layout;
+  const [settingShow, setSettingShow] = useState(false);
+  const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const userInfo = useSelector(state => {
     return state.user.userInfo;
@@ -33,13 +36,20 @@ export default function Home() {
   const navigateMenu = function (item) {
     navigate(item.key)
   }
+  const ShowTopicDialog = () => {
+    setSettingShow(true)
+    setOpen(false)
+  }
+  const OnClose = () => {
+    setSettingShow(false)
+  }
   const popoverContent = (
     <div className='home_popover' style={{ cursor: "pointer" }}>
       <p style={{ lineHeight: "30px" }}>
         <Link to={"/home/person"}>个人设置</Link>
       </p>
       <p style={{ lineHeight: "30px" }}>
-        <Link to={"/home/topic"}>设置主题</Link>
+        <span onClick={ShowTopicDialog}>设置主题</span>
       </p>
       <p style={{ lineHeight: "30px" }} onClick={layout}>退出登录</p>
     </div>
@@ -51,8 +61,8 @@ export default function Home() {
         <div className="logo" />
         <div className='avatar'>
           <span style={{ color: '#fff' }} >{userInfo?.username}</span>
-          <Popover content={popoverContent} title={<p>个人账户</p>} trigger="click">
-            <Avatar size={50} icon={<UserOutlined />}></Avatar>
+          <Popover open={open} content={popoverContent} title={<p>个人账户</p>} trigger="click">
+            <Avatar size={50} icon={<UserOutlined />} onClick={() => { setOpen(true) }}></Avatar>
           </Popover>
         </div>
         <Menu theme="dark" mode="horizontal" items={navMenu} onSelect={navigateMenu} />
@@ -71,6 +81,7 @@ export default function Home() {
           </Content>
         </Layout>
       </Layout>
+      <SettingTopicDialog open={settingShow} onClose={OnClose} />
     </Layout>
   );
 }

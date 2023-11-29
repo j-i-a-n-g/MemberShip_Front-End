@@ -25,7 +25,7 @@ export default function SettingTopicDialog(props) {
       <div className='topic_main'>
         {
           list.map((item, index) => {
-            if (index === topicIndex) {
+            if (index === parseInt(topicIndex)) {
               return <div key={item.id} className='topic active' onClick={(e) => { chooseTopic(e, item.id) }}>
                 <img src={item.imgData} alt="" />
               </div>

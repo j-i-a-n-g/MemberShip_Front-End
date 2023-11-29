@@ -7,17 +7,17 @@ import SettingTopicDialog from '@/components/SettingTopicDialog/SettingTopicDial
 import { useState } from 'react';
 
 export default function Login() {
-  const [settingShow, useSettingShow] = useState(false)
-  const [checked, useChecked] = useState(false)
+  const [settingShow, setSettingShow] = useState(false)
+  const [checked, setChecked] = useState(false)
   const navigate = useNavigate(); // 必须在组件顶层作用域使用
   const dispatch = useDispatch();
   const useSettingTopic = () => {
-    useChecked(true)
-    useSettingShow(true)
+    setChecked(true)
+    setSettingShow(true)
   }
   const OnClose = () => {
-    useSettingShow(false)
-    useChecked(false)
+    setSettingShow(false)
+    setChecked(false)
   }
   const onFinish = (values) => {
     request({
