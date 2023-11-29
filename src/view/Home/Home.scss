@@ -3,6 +3,7 @@
 
   .ant-layout-header {
     position: relative;
+    background-color: var(--default_theme_bg_color);
 
     .avatar {
       position: absolute;
@@ -18,12 +19,20 @@
     margin: 10px;
   }
 
+  .ant-layout-sider .ant-menu {
+    background-color: var(--deep_theme_bg_color);
+  }
+
   .ant-menu-root {
     width: 100%;
   }
 
   .ant-layout-header {
     padding: 0 !important;
+  }
+
+  .ant-layout {
+    background-color: var(--shallow_theme_bg_color);
   }
 }
 

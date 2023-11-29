@@ -66,7 +66,7 @@ export default function Home() {
           />
         </Sider>
         <Layout style={{ padding: '0 10px 24px' }} >
-          <Content style={{ padding: 24, margin: 0, minHeight: 280, backgroundColor: '#febcd3' }}>
+          <Content style={{ padding: 24, margin: 0, minHeight: 280 }}>
             <Outlet></Outlet>
           </Content>
         </Layout>
