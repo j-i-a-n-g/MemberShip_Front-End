@@ -14,7 +14,7 @@ window.onload = () => {
     setTopic(parseInt(index) || 0)
   }
   window.addEventListener('storage', (e) => {
-    if (e.key == "topic_number") {
+    if (e.key === "topic_number") {
       setTopic(parseInt(e.newValue))
     }
   })

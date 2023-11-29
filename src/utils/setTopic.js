@@ -70,6 +70,8 @@ export const setTopic = (index) => {
       document.documentElement.style.setProperty('--default_theme_bg_color', '#20612d')
       document.documentElement.style.setProperty('--shallow_theme_bg_color', '#0c4d25')
       break;
+    default:
+      break;
   }
 
 }

@@ -8,6 +8,7 @@ import request from '@/utils/request.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link, Outlet } from 'react-router-dom';
 import SettingTopicDialog from '@/components/SettingTopicDialog/SettingTopicDialog.jsx';
+import NetWork from './NetWork/NetWork';
 
 export default function Home() {
   const { Header, Content, Sider } = Layout;
@@ -82,6 +83,7 @@ export default function Home() {
         </Layout>
       </Layout>
       <SettingTopicDialog open={settingShow} onClose={OnClose} />
+      <NetWork />
     </Layout>
   );
 }
