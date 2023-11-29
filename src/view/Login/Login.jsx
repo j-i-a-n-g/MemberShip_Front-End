@@ -26,9 +26,9 @@ export default function Login() {
       data: values
     }).then(res => {
       console.log(res)
-      message.success(res.message)
-      dispatch({ type: "user/setUserInfo", data: res.data.user })
-      localStorage.setItem('member_token', res.data.token)
+      message.success("登录成功")
+      dispatch({ type: "user/setUserInfo", data: res.data.data.user })
+      localStorage.setItem('member_token', res.data.data.token)
       navigate("/home")
     }).catch(() => { })
   };
