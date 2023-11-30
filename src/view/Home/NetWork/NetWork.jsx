@@ -31,8 +31,35 @@ export default function NetWork() {
   setInterval(() => {
     updateState()
   }, 2000)
+  let card = document.querySelector(".network_card")
+  const onMouseEnter = (e) => {
+    card.style.setProperty('cursor', 'move')
+    card.style.setProperty('user-select', 'none')
+  }
+  let startX = 0;
+  let startY = 0;
+  let cardLeft = 0;
+  let cardTop = 0;
+  card.onmousedown = (e) => {
+    startX = e.pageX;
+    startY = e.pageY;
+    cardLeft = card.offsetLeft;
+    cardTop = card.offsetTop;
+    document.onmousemove = (e) => {
+      let endX = e.pageX;
+      let endY = e.pageY;
+      requestAnimationFrame(() => {
+        card.style.left = (cardLeft + (endX - startX)) + 'px'
+        card.style.top = (cardTop + (endY - startY)) + 'px'
+      })
+    }
+  }
+  card.onmouseup = (e) => {
+    document.onmousemove = null
+  }
   return (
-    <div className='network_card'>
+    <div onMouseEnter={onMouseEnter}
+      className='network_card'>
       <Card title="当前网络情况" style={{ width: 300 }}>
         <p>网络状态：{state}</p>
         <p>延迟：{delay}</p>
