@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card } from 'antd';
 import "./NetWork.scss"
 
@@ -15,6 +15,7 @@ export default function NetWork() {
   // navigator.connection.onchange = (e) => {
   //   console.log(e, '网络变化了')
   // }
+  let card = useRef()
   const updateState = () => {
     let { effectiveType, downlink, rtt } = navigator.connection
     if (rtt === 0 && downlink === 0) {
@@ -27,38 +28,41 @@ export default function NetWork() {
   }
   useEffect(() => {
     updateState()
+    setInterval(() => {
+      updateState()
+    }, 2000)
   })
-  setInterval(() => {
-    updateState()
-  }, 2000)
-  let card = document.querySelector(".network_card")
+
   const onMouseEnter = (e) => {
-    card.style.setProperty('cursor', 'move')
-    card.style.setProperty('user-select', 'none')
+    card.current.style.setProperty('cursor', 'move')
+    card.current.style.setProperty('user-select', 'none')
   }
   let startX = 0;
   let startY = 0;
   let cardLeft = 0;
   let cardTop = 0;
-  card.onmousedown = (e) => {
-    startX = e.pageX;
-    startY = e.pageY;
-    cardLeft = card.offsetLeft;
-    cardTop = card.offsetTop;
-    document.onmousemove = (e) => {
-      let endX = e.pageX;
-      let endY = e.pageY;
-      requestAnimationFrame(() => {
-        card.style.left = (cardLeft + (endX - startX)) + 'px'
-        card.style.top = (cardTop + (endY - startY)) + 'px'
-      })
+  if (card.current) {
+    card.current.onmousedown = (e) => {
+      startX = e.pageX;
+      startY = e.pageY;
+      cardLeft = card.current.offsetLeft;
+      cardTop = card.current.offsetTop;
+      document.onmousemove = (e) => {
+        let endX = e.pageX;
+        let endY = e.pageY;
+        requestAnimationFrame(() => {
+          card.current.style.left = (cardLeft + (endX - startX)) + 'px'
+          card.current.style.top = (cardTop + (endY - startY)) + 'px'
+        })
+      }
+    }
+    card.current.onmouseup = (e) => {
+      document.onmousemove = null
     }
   }
-  card.onmouseup = (e) => {
-    document.onmousemove = null
-  }
+
   return (
-    <div onMouseEnter={onMouseEnter}
+    <div ref={card} onMouseEnter={onMouseEnter}
       className='network_card'>
       <Card title="当前网络情况" style={{ width: 300 }}>
         <p>网络状态：{state}</p>
