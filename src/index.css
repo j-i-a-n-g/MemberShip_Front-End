@@ -189,4 +189,5 @@ body {
   --deep_theme_bg_color: #aab0b6;
   --default_theme_bg_color: #dddfe2;
   --shallow_theme_bg_color: #fcfcfc;
+  --theme_font_color: #000;
 }

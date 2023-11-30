@@ -17,7 +17,7 @@ export default function NetWork() {
   // }
   const updateState = () => {
     let { effectiveType, downlink, rtt } = navigator.connection
-    if (rtt == 0 && downlink == 0) {
+    if (rtt === 0 && downlink === 0) {
       setState("无网络")
     } else {
       setState(effectiveType)

@@ -5,6 +5,15 @@
     position: relative;
     background-color: var(--default_theme_bg_color);
 
+    .ant-menu-overflow {
+      height: 100%;
+      background-color: var(--default_theme_bg_color);
+
+      .ant-menu-title-content {
+        color: var(--theme_font_color);
+      }
+    }
+
     .avatar {
       position: absolute;
       right: 30px;
@@ -21,6 +30,16 @@
 
   .ant-layout-sider .ant-menu {
     background-color: var(--deep_theme_bg_color);
+
+    .ant-menu-submenu-title span,
+    .ant-menu-submenu-arrow,
+    .ant-menu-title-content {
+      color: var(--theme_font_color);
+    }
+  }
+
+  .ant-tabs-nav-list .ant-tabs-tab:not(.ant-tabs-tab-active) .ant-tabs-tab-btn {
+    color: var(--theme_font_color);
   }
 
   .ant-menu-root {

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Layout, Menu, Popover } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux'
-import './Home.scss';
-import { navMenu, items2 } from '@/hook/data.js';
+import { navMenu } from '@/hook/data.js';
 import request from '@/utils/request.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link, Outlet } from 'react-router-dom';
 import SettingTopicDialog from '@/components/SettingTopicDialog/SettingTopicDialog.jsx';
 import NetWork from './NetWork/NetWork';
+import './Home.scss';
 
 export default function Home() {
-  const { Header, Content, Sider } = Layout;
+  const { Header, Content } = Layout;
   const [settingShow, setSettingShow] = useState(false);
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
@@ -66,21 +66,12 @@ export default function Home() {
             <Avatar size={50} icon={<UserOutlined />} onClick={() => { setOpen(true) }}></Avatar>
           </Popover>
         </div>
-        <Menu theme="dark" mode="horizontal" items={navMenu} onSelect={navigateMenu} />
+        <Menu mode="horizontal" items={navMenu} onSelect={navigateMenu} />
       </Header>
-      <Layout>
-        {/* 侧边栏 */}
-        <Sider width={200}>
-          <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }} // backgroundColor: '#fd70a1' 
-            items={items2}
-          />
-        </Sider>
-        <Layout style={{ padding: '0 10px 24px' }} >
-          <Content style={{ padding: 24, margin: 0, minHeight: 280 }}>
-            <Outlet></Outlet>
-          </Content>
-        </Layout>
+      <Layout style={{ padding: '0 10px 24px' }} >
+        <Content style={{ padding: 24, margin: 0, minHeight: 280 }}>
+          <Outlet></Outlet>
+        </Content>
       </Layout>
       <SettingTopicDialog open={settingShow} onClose={OnClose} />
       <NetWork />
