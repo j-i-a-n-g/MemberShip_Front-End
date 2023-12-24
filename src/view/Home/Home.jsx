@@ -9,6 +9,7 @@ import { useNavigate, Link, Outlet } from 'react-router-dom';
 import SettingTopicDialog from '@/components/SettingTopicDialog/SettingTopicDialog.jsx';
 import NetWork from './NetWork/NetWork';
 import './Home.scss';
+import { initLogo } from './Home.js'
 
 export default function Home() {
   const { Header, Content } = Layout;
@@ -44,6 +45,10 @@ export default function Home() {
   const OnClose = () => {
     setSettingShow(false)
   }
+  useEffect(() => {
+    let dom = document.querySelector('.logo')
+    initLogo(dom)
+  }, [])
   const popoverContent = (
     <div className='home_popover' style={{ cursor: "pointer" }}>
       <p style={{ lineHeight: "30px" }}>

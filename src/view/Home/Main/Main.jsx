@@ -7,7 +7,6 @@ import './Main.scss'
 export default function Topic() {
   const init3D = () => {
     const mainDom = document.querySelector(".main");
-    console.log(mainDom.offsetWidth, mainDom.offsetHeight)
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -71,10 +70,14 @@ export default function Topic() {
       requestAnimationFrame(render);
     }
     render();
+    // 监听屏幕的大小改变，修改渲染器的宽高，相机的比例
+    window.addEventListener("resize", () => {
+      camera.aspect = mainDom.offsetWidth / mainDom.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(mainDom.offsetWidth, mainDom.offsetHeight);
+    });
   }
-  window.onresize = () => {
-    init3D();
-  }
+
   useEffect(() => {
     init3D();
   }, [])
