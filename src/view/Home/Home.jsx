@@ -47,7 +47,7 @@ export default function Home() {
   }
   useEffect(() => {
     let dom = document.querySelector('.logo')
-    initLogo(dom)
+    initLogo(dom, "新年快乐")
   }, [])
   const popoverContent = (
     <div className='home_popover' style={{ cursor: "pointer" }}>

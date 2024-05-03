@@ -21,7 +21,7 @@ export default function SettingTopicDialog(props) {
     localStorage.setItem('topic_number', id)
   }
   return (
-    <Drawer title="创建角色" placement="right" onClose={props.onClose} open={props.open}>
+    <Drawer title="选择主题" placement="right" onClose={props.onClose} open={props.open}>
       <div className='topic_main'>
         {
           list.map((item, index) => {

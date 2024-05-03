@@ -1,21 +1,26 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // 导入FontLoader
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 // 导入TextGeometry
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import gsap from "gsap";
 
-export const initLogo = (dom) => {
+export const initLogo = (dom, text) => {
+  if (dom.childNodes.length > 0) {
+    dom.removeChild(dom.childNodes[0])
+  }
   const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(
-    45,
-    dom.offsetWidth / dom.offsetHeight,
+  const camera = new THREE.OrthographicCamera(
+    dom.offsetWidth / 2,
+    -dom.offsetWidth / 2,
+    dom.offsetHeight / 2,
+    -dom.offsetHeight / 2,
     0.1,
     1000
   );
-  // camera.position.set(-0.34, -14.23, 7.96);
-  camera.position.set(0, 0, 400);
+  camera.position.set(0, 3, 500);
+  camera.zoom = 0.38;
+  camera.lookAt(0, 0, 0)
   camera.updateProjectionMatrix();
   scene.add(camera);
 
@@ -25,25 +30,15 @@ export const initLogo = (dom) => {
   renderer.setSize(dom.offsetWidth, dom.offsetHeight)
   dom.appendChild(renderer.domElement);
 
-  const control = new OrbitControls(camera, renderer.domElement);
-  // control.target.set(0, -10, 0)
-  control.target.set(0, 0, 0)
-  control.enableDamping = true;
-
   let texture = new THREE.TextureLoader().load('/font/room.jpg')
-  console.log(texture)
   texture.mapping = THREE.EquirectangularReflectionMapping;
   scene.background = new THREE.Color(0xd5b2ac);
   scene.backgroundBlurriness = 0.5;
   scene.environment = texture;
 
-  // dom.onclick = () => {
-  //   console.log(camera.position, control.target)
-  // }
-
   const fontLoader = new FontLoader();
   fontLoader.load('/fonts/FangSong_Regular.json', font => {
-    const genmary = new TextGeometry("新年快乐", {
+    const genmary = new TextGeometry(text, {
       font: font,
       size: 80, // 字体大小
       height: 15, // 字体厚度
@@ -84,7 +79,6 @@ export const initLogo = (dom) => {
 
   const render = () => {
     renderer.render(scene, camera);
-    control.update();
     requestAnimationFrame(render);
   }
   render();
