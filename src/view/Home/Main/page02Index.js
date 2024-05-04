@@ -40,7 +40,8 @@ export const initCanvas02 = () => {
   mesh.rotation.x = Math.PI / 6
   mesh.rotation.z = Math.PI / 6
   scene.add(mesh)
-  const div = document.getElementById('tag');
+  const div = document.createElement('div');
+  div.innerHTML = "红色球"
   // 创建标签 在init函数中
   // const earthDiv = document.createElement('div');
   // earthDiv.className = 'label';

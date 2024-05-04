@@ -36,7 +36,6 @@ export default function Topic() {
     // </React.Fragment>
     <React.Fragment>
       <div className='main'>
-        <div id="tag"></div>
         <div className='page03'>
           <h2>最是人间留不住</h2>
           <h4>朱颜辞镜花辞树</h4>
