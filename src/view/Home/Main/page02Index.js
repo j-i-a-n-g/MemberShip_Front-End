@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-// 引入CSS2渲染器CSS2DRenderer和CSS2模型对象CSS2DObject
-import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 export const initCanvas02 = () => {
   let main = document.querySelector('.page02')
@@ -9,11 +7,11 @@ export const initCanvas02 = () => {
   let camera = new THREE.PerspectiveCamera(
     75,
     main.offsetWidth / main.offsetHeight,
-    0.1,
+    40,
     1000
   )
   camera.position.set(0, 50, 0);
-  camera.lookAt(0, 0, 0)
+  camera.lookAt(0, 0, 0);
   camera.updateProjectionMatrix();
   scene.add(camera);
   // scene.background = new THREE.Color(0x06022b);
@@ -22,97 +20,46 @@ export const initCanvas02 = () => {
     antialias: true,
     alpha: true
   })
+  // renderer.setSize(window.offsetWidth, window.offsetHeight);
   renderer.setSize(main.offsetWidth, main.offsetHeight);
   main.appendChild(renderer.domElement);
 
-  // 创建一个CSS2渲染器CSS2DRenderer
-  const css2Renderer = new CSS2DRenderer();
-  css2Renderer.setSize(main.offsetWidth, main.offsetHeight);
-  main.appendChild(css2Renderer.domElement);
-
-  // 第一个物体
-  let mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(10, 10, 10),
-    new THREE.MeshBasicMaterial({
-      color: 0xff0000,
-    })
-  )
-  mesh.rotation.x = Math.PI / 6
-  mesh.rotation.z = Math.PI / 6
-  scene.add(mesh)
-  const div = document.createElement('div');
-  div.innerHTML = "红色球"
-  // 创建标签 在init函数中
-  // const earthDiv = document.createElement('div');
-  // earthDiv.className = 'label';
-  // earthDiv.innerHTML = '地球'
-  // HTML元素转化为threejs的CSS2模型对象
-  const tag = new CSS2DObject(div)
-  tag.position.set(0, 0, 0);
-  scene.add(tag);
-  mesh.add(tag)
-  css2Renderer.domElement.style.position = 'absolute';
-  css2Renderer.domElement.style.top = '0px';
-
-  // 第二个物体
-  let mesh02 = new THREE.Mesh(
-    new THREE.BoxGeometry(10, 10, 10),
-    new THREE.MeshBasicMaterial({
-      color: 0xffff00,
-    })
-  )
-  mesh02.rotation.x = Math.PI / 6
-  mesh02.rotation.z = Math.PI / 6;
-  mesh02.position.set(10, 10, 2)
-  scene.add(mesh02);
-  const div02 = document.createElement("div");
-  div02.innerHTML = "黄球"
-  div02.className = 'label';
-  const meshDiv02 = new CSS2DObject(div02);
-  meshDiv02.position.set(0, 0, 0);
-  scene.add(meshDiv02);
-  mesh02.add(meshDiv02)
-
-  // 标签遮挡效果
-  function computePosition() {
-    // 标签的位置
-    let mesh02Position = meshDiv02.position.clone();
-    // 计算相机和标签之间的距离 distanceTo：计算两个点之间的直线距离
-    let mesh02Distance = mesh02Position.distanceTo(camera.position);
-    // 将标签的位置向量从世界空间投影到摄像机的标准化设备坐标空间(三维坐标到二维屏幕坐标）;
-    mesh02Position.project(camera);
-    // 根据meshDiv02的屏幕坐标，设置射线的起点和方向
-    let raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mesh02Position, camera);
-    // 检测射线是否与场景中的其他对象相交
-    const intersects = raycaster.intersectObjects(scene.children, true);
-    if (!intersects.length) {
-      meshDiv02.element.classList.add("visible");
-    } else {
-      // 如果有交点，需要进一步判断，球体在标签前面还是在标签后面。在标签前面代表挡住了标签，这时隐藏标签。否则显示标签；
-      // 获取最近相交点（球体）到相机的距离
-      const minDistance = intersects[0].distance;
-      console.log(minDistance, mesh02Distance)
-      if (minDistance > mesh02Distance) {
-        meshDiv02.element.classList.remove("visible");
-      } else {
-        meshDiv02.element.classList.add("visible");
-      }
-    }
-  }
-  computePosition()
-
-
-  // let control = new OrbitControls(camera, css2Renderer.domElement);
+  // let control = new OrbitControls(camera, renderer.domElement);
+  // // 设置控制器的最大缩放倍数
+  // // control.maxDistance = 100;
   // control.target.set(0, 0, 0);
   // control.enableDamping = true;
+  // let texture = new THREE.TextureLoader().load("./model/rain.png")
+  let texture = new THREE.TextureLoader().load("/model/rain.png")
+  const spriteMaterial = new THREE.SpriteMaterial({
+    // color: 0xff0000,
+    map: texture,
+    transparent: true,
+  })
+
+  let group = new THREE.Group()
+  for (let i = 0; i < 5000; i++) {
+    const sprite = new THREE.Sprite(spriteMaterial)
+    group.add(sprite);
+    sprite.scale.set(0.5, 1.5)
+    const x = 200 * (Math.random() - 0.5);
+    const y = 20 * Math.random();
+    const z = -40 * Math.random() * 2;
+    sprite.position.set(x, y, z)
+  }
+  scene.add(group);
 
   let render = function () {
+    group.children.forEach(sprite => {
+      sprite.position.z += 0.5;
+      sprite.position.x += 0.1;
+      if (sprite.position.z > 20) {
+        sprite.position.z = -20
+        sprite.position.y = 20 * Math.random();
+        sprite.position.x = 1000 * (Math.random() - 0.5);
+      }
+    })
     renderer.render(scene, camera);
-    css2Renderer.render(scene, camera);
-    mesh02.rotateY(1 / 20)
-    mesh02.rotateZ(1 / 20)
-    mesh02.rotateX(1 / 20)
     // control.update();
     requestAnimationFrame(render);
   }
@@ -123,5 +70,6 @@ export const initCanvas02 = () => {
     camera.updateProjectionMatrix();
     renderer.setSize(main.offsetWidth, main.offsetHeight);
   });
+
 }
 
